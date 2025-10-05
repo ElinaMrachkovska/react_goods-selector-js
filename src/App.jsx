@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import 'bulma/css/bulma.css';
-import './App.scss';
 
 export const goods = [
   'Dumplings',
@@ -17,32 +15,36 @@ export const goods = [
 
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState('Jam');
+
   const handleClear = () => {
     setSelectedGood('');
   };
 
-  const AddButton = good => {
+  const handleSelect = good => {
     setSelectedGood(good);
   };
 
   const isGoodSelected = !!selectedGood;
 
-  const headerText = isGoodSelected ? `${selectedGood}` : 'No goods selected';
+  const headerText = isGoodSelected
+    ? `${selectedGood} is selected`
+    : 'No goods selected';
 
   return (
     <main className="section container">
-      <div className=" block">
-        {/* <h1 className="title is-flex is-align-items-center">No goods selected</h1> */}
-
+      <div className="block">
         <h1 className="title is-flex is-align-items-center">
           {headerText}
 
-          <button
-            data-cy="ClearButton"
-            type="button"
-            className="delete ml-3"
-            onClick={handleClear}
-          />
+          {isGoodSelected && (
+            <button
+              data-cy="ClearButton"
+              type="button"
+              className="delete ml-3"
+              onClick={handleClear}
+              aria-label="Clear selection"
+            />
+          )}
         </h1>
       </div>
 
@@ -60,11 +62,12 @@ export const App = () => {
                 <td>
                   {isSelected ? (
                     <button
-                      data-cy="AddButton"
+                      data-cy="RemoveButton"
                       type="button"
-                      className="button"
+                      // Використовуємо клас is-danger для кнопки видалення
+                      className="button is-danger"
                       onClick={handleClear}
-                      aria-label={`видалити ${good} зі списку`}
+                      aria-label={`Remove ${good} from selection`}
                     >
                       -
                     </button>
@@ -72,9 +75,9 @@ export const App = () => {
                     <button
                       data-cy="AddButton"
                       type="button"
-                      className="button"
-                      onClick={() => AddButton(good)}
-                      aria-label={`додати ${good} у список`}
+                      className="button is-primary"
+                      onClick={() => handleSelect(good)}
+                      aria-label={`Select ${good}`}
                     >
                       +
                     </button>
@@ -92,3 +95,5 @@ export const App = () => {
     </main>
   );
 };
+
+export default App;
