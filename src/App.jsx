@@ -17,6 +17,14 @@ export const goods = [
 
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState('Jam');
+  
+ const handleSelectGood = (name) => {
+    setSelectedGood(name);
+  };
+
+    const handleClearSelection = () => {
+    setSelectedGood('');
+  };
 
   return (
     <main className="section container">
@@ -41,6 +49,9 @@ export const App = () => {
           {goods.map(good => {
             const isSelected = good === selectedGood;
 
+            const isAddVisible = !selectedGood;
+            const isRemoveVisible = isSelected;
+
             return (
               <tr
                 data-cy="Good"
@@ -48,21 +59,22 @@ export const App = () => {
                 className={isSelected ? 'has-background-success-light' : ''}
               >
                 <td>
-                  {isSelected ? (
+                  {isRemoveVisible && (
                     <button
                       data-cy="RemoveButton"
                       type="button"
                       className="button is-info"
-                      onClick={() => setSelectedGood('')}
+                      onClick={() => handleClearSelection('')}
                     >
                       -
                     </button>
-                  ) : (
+                  )}
+                  {isAddVisible && (
                     <button
                       data-cy="AddButton"
                       type="button"
                       className="button"
-                      onClick={() => setSelectedGood(good)}
+                      onClick={() => handleSelectGood(good)}
                     >
                       +
                     </button>
