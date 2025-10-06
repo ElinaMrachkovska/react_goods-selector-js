@@ -17,12 +17,12 @@ export const goods = [
 
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState('Jam');
-  
- const handleSelectGood = (name) => {
+
+  const handleSelectGood = name => {
     setSelectedGood(name);
   };
 
-    const handleClearSelection = () => {
+  const handleClearSelection = () => {
     setSelectedGood('');
   };
 
@@ -49,7 +49,7 @@ export const App = () => {
           {goods.map(good => {
             const isSelected = good === selectedGood;
 
-            const isAddVisible = !selectedGood;
+            const isAddVisible = !isSelected;
             const isRemoveVisible = isSelected;
 
             return (
@@ -64,7 +64,7 @@ export const App = () => {
                       data-cy="RemoveButton"
                       type="button"
                       className="button is-info"
-                      onClick={() => handleClearSelection('')}
+                      onClick={handleClearSelection('')}
                     >
                       -
                     </button>
@@ -74,7 +74,7 @@ export const App = () => {
                       data-cy="AddButton"
                       type="button"
                       className="button"
-                      onClick={() => handleSelectGood(good)}
+                      onClick={handleSelectGood(good)}
                     >
                       +
                     </button>
